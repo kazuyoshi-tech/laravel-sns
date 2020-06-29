@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+//不要のため削除
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
