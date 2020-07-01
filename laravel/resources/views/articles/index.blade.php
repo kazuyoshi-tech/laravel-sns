@@ -38,8 +38,8 @@
                         </div>
                     </div>
 
-                    <div id="model-delete-{{ $article->id }}" class="modal fade" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="docuemnt">
+                    <div id="modal-delete-{{ $article->id }}" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
