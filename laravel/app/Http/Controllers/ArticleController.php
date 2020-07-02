@@ -11,7 +11,7 @@ class ArticleController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Artticle::class, 'article');
+        $this->authorizeResource(Article::class, 'article');
     }
 
     public function index()
