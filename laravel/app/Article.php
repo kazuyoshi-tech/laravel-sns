@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Ralations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Article extends Model
 {
@@ -25,7 +26,12 @@ class Article extends Model
     public function isLikedBy(?User $user): bool
     {
         return $user
-            ?(bool)$this->likes->where('id', $user->id)->count()
-            :false;
+            ? (bool)$this->likes->where('id', $user->id)->count()
+            : false;
+    }
+
+    public function getCountLikesAttribute(): int
+    {
+        return $this->likes->count();
     }
 }
