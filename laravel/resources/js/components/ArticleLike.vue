@@ -34,7 +34,7 @@ export default {
     },
     data() {
         return {
-            inLikedBy: this.initialIsLikedBy,
+            isLikedBy: this.initialIsLikedBy,
             countLikes: this.initialCountLikes,
             gotToLike: false,
         }
