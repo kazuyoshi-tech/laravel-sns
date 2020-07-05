@@ -1,15 +1,15 @@
 <template>
     <div>
-        <!-- <input
+        <input
             type="hidden"
             name="tags"
             :value="tagsJson"
-        > -->
+        >
         <vue-tags-input
             v-model="tag"
             :tags="tags"
             placeholder="タグを5個まで入力できます"
-            :autocomplete-imtes="filteredItems"
+            :autocomplete-items="filteredItems"
             @tags-changed="newTags => tags = newTags"
         />
     </div>
@@ -22,10 +22,16 @@ export default {
     components: {
         VueTagsInput,
     },
+    props: {
+        initialTags: {
+            type: Array,
+            default: [],
+        },
+    },
     data() {
         return {
             tag: '',
-            tags: [],
+            tags: this.initialTags,
             autocompleteItems: [{
                 text: 'Spain',
             }, {
