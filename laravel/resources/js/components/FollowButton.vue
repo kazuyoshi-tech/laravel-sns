@@ -17,24 +17,24 @@
 export default {
     data() {
         return {
-            isFollowedBy:false,
+            isFollowedBy: this.initialIsFollowedBy,
         }
     },
     computed: {
         buttonColor() {
             return this.isFollowedBy
-            ?'bg-primary text-white'
-            :'bg-while'
+            ? 'bg-primary text-white'
+            : 'bg-while'
         },
         buttonIcon() {
             return this.isFollowedBy
-            ?'fas fa-user-check'
-            :'fas fa-user-plus'
+            ? 'fas fa-user-check'
+            : 'fas fa-user-plus'
         },
         buttonText() {
             return this.isFollowedBy
-            ?'フォロー中'
-            :'フォロー'
+            ? 'フォロー中'
+            : 'フォロー'
         },
     },
 }
