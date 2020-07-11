@@ -31,3 +31,4 @@ Route::prefix('users')->name('users.')->group(function () {
     });
 });
 
+Route::get('/qiitas', 'QiitaController@index')->name('qiitas.index');

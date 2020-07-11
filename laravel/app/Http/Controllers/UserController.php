@@ -47,6 +47,7 @@ class UserController extends Controller
         ]);
     }
 
+
     public function followers(string $name)
     {
         $user = User::where('name', $name)->first()

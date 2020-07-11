@@ -4,6 +4,10 @@
 
     <ul class="navbar-nav ml-auto">
 
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('qiitas.index') }}">qiita一覧</a>
+        </li>
+
         @guest 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('register') }}">ユーザー登録</a>
