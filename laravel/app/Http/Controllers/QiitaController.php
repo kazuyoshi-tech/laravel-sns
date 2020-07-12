@@ -10,26 +10,24 @@ class QiitaController extends Controller
     {
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request("GET", 'https://qiita.com/api/v2/items/',[
-            'headers' => [
-                'Authorization' => 'Bearer ' .ENV('qiita_token'),
-                'Content-Type' => 'HTTP/1.1'
-            ],
-            'query' => [
-                'query' => 'python',
-                'per_page' => 1,                
-            ],
+        // $response = $client->request("GET", 'https://qiita.com/api/v2/items/',[
+        //     'headers' => [
+        //         'Authorization' => 'Bearer ' .ENV('qiita_token'),
+        //         'Content-Type' => 'HTTP/1.1'
+        //     ],
+        //     'query' => [
+        //         'query' => 'python',
+        //         'per_page' => 1,                
+        //     ],
             
-        ]);
+        // ]);
 
-        // $response = $client->request('GET', 'https://yukicoder.me/api/v1/problems/');
+        $response = $client->request('GET', 'https://yukicoder.me/api/v1/problems/');
 
-        $qiitas = $response->getBody();
+        $qiitas = $response->getBody()->getContents();
 
-        $qiitas_json = json_encode($qiitas);
+        $qiitas_array = json_decode($qiitas, true);
 
-        // var_dump($qiitas);
-
-        return view('qiitas.index', ['qiitas' => $qiitas]);
+        return view('qiitas.index', ['qiitas' => $qiitas_array]);
     }
 }
