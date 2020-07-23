@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -21,9 +23,10 @@ class ExampleTest extends TestCase
         $user = factory(User::class)->create();
         $response = $this
             ->actingAs($user)
-            ->get(route('/articles/create'));
+            ->get(route('articles.create'));
         
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertViewIs('articles.create');
     }
     
 }
