@@ -17,16 +17,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        // $response = $this->get('/login');
-
-        // $response->assertStatus(200);
-        $user = factory(User::class)->create();
-        $response = $this
-            ->actingAs($user)
-            ->get(route('articles.create'));
-        
-        $response->assertStatus(200)
-            ->assertViewIs('articles.create');
+        $response = $this->get('/login');
+        $response->assertStatus(200);
     }
     
 }

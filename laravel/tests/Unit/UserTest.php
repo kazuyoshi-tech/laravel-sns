@@ -15,19 +15,19 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
-    {
-        // $user = factory(User::class)->create();
-        // $response = $this
-        //     ->actingAs($user)
-        //     ->get(route('articles.index'));
+    // public function testExample()
+    // {
+    //     // $user = factory(User::class)->create();
+    //     // $response = $this
+    //     //     ->actingAs($user)
+    //     //     ->get(route('articles.index'));
         
-        // $response->assertStatus(200)
-        //     ->assertViewIs('memo');
+    //     // $response->assertStatus(200)
+    //     //     ->assertViewIs('memo');
 
-        // $response = $this->get('/login');
-        // $response->assertStatus(200);
-        //         // ->assertViewIs('welcome'); 
+    //     // $response = $this->get('/login');
+    //     // $response->assertStatus(200);
+    //     //         // ->assertViewIs('welcome'); 
 
-    }
+    // }
 }
