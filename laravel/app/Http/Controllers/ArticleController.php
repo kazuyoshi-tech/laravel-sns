@@ -44,6 +44,8 @@ class ArticleController extends Controller
             $article->tags()->attach($tag);
         });
 
+        session()->flash('flash_message', '投稿が完了しました');
+
         return redirect()->route('articles.index');
     }
 

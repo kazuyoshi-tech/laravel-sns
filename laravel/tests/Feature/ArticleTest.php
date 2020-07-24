@@ -25,6 +25,15 @@ class ArticleTest extends TestCase
         // テスト記事+ユーザーの作成
         // $this->user = factory(User::class)->create();
         $this->article = factory(Article::class)->create();
+
+        #記事データ作成
+        $this->articleDate_succuss = [
+            'title' => '競技プログラミング',
+            'body' => '中毒性あり、危険',
+        ];
+        $this->articleDate_fail = [
+            'title' => '競技プログラミング',
+        ];
     }
 
     public function testArticleIndex(): void
@@ -45,7 +54,7 @@ class ArticleTest extends TestCase
             ->assertSee($this->article->body);
     }
 
-    public function testArticleCreate_success(): void
+    public function testArticleCreate_Success(): void
     {
         // actingAsヘルパで現在認証済みのユーザーを指定する
         $response = $this->actingAs($this->article->user);
@@ -54,7 +63,7 @@ class ArticleTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function testArticleCreate_fails(): void
+    public function testArticleCreate_Fails(): void
     {
         #ユーザー認証なしで記事作成ページに行けない
         $response = $this->get(route('articles.create'))
@@ -62,35 +71,61 @@ class ArticleTest extends TestCase
             ->assertRedirect('login');
     }
 
-    public function testArticleEdit_success(): void
+    public function testArticleEdit_Success(): void
     {
         // actingAsヘルパで現在認証済みのユーザーを指定する
         $response = $this->actingAs($this->article->user);
 
-        #ユーザー認証なしで記事作成ページに行けない
+        #記事作成ユーザーで記事更新ページに行ける
         $response = $this->get(route('articles.edit', ['article' => $this->article]))
             ->assertStatus(200)
             ->assertSee($this->article->title)
             ->assertSee($this->article->body);
     }
 
+    public function testArticleEdit_Fail_Guest(): void
+    {
+        #ユーザー認証なしで記事更新ページに行けない
+        $response = $this->get(route('articles.edit', ['article' => $this->article]))
+            ->assertStatus(302)
+            ->assertRedirect('login');
+    }
+
+    public function testArticleEdit_Fail_OtherUser(): void
+    {
+        #アナザーユーザーの作成＋ログイン
+        $this->otherUser = factory(User::class)->create();
+        $response = $this->actingAs($this->otherUser);
+
+        #アナザーユーザーでは403
+        $response = $this->get(route('articles.edit', ['article' => $this->article]))
+            ->assertStatus(403);
+    }
+
+    public function testArticleStore_Success(): void
+    {
+        #アナザーユーザーの作成＋ログイン
+        $this->otherUser = factory(User::class)->create();
+        $response = $this->actingAs($this->otherUser);
+
+        #所定の内容を記述して投稿
+        $response->post(route('articles.store'), $this->articleDate_succuss)
+            ->assertStatus(302)
+            ->assertSessionHas('flash_message', '投稿が完了しました')
+            ->assertRedirect(route('articles.index'));
+    }
+
+    public function testArticleStore_fail(): void
+    {
+        #アナザーユーザーの作成＋ログイン
+        $this->otherUser = factory(User::class)->create();
+        $response = $this->actingAs($this->otherUser);
+
+        $response->post(route('articles.store'), $this->articleDate_fail)
+            ->assertStatus(302)
+            ->assertRedirect(route('articles.index'));
+    }
 
 
 
-
-
-
-
-    // public function testLogin(): void
-    // {
-    //     // 作成したテストユーザのemailとpasswordで認証リクエスト
-    //     $response = $this->post(route('login'), [
-    //         'email' => $this->user->email,
-    //         'password' => $this->user->password,
-    //     ]);
-
-    //     // リクエスト送信後、正しいくリダイレクト処理されていることを確認
-    //     $response->assertRedirect('/');
-
-    // }
 }
