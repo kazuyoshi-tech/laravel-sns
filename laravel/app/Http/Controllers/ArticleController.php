@@ -74,6 +74,8 @@ class ArticleController extends Controller
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $article->tags()->attach($tag);
         });
+
+        session()->flash('flash_message', '更新が完了しました');
         return redirect()->route('articles.index');
     }
 

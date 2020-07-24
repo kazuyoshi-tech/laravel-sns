@@ -93,23 +93,19 @@ class ArticleTest extends TestCase
 
     public function testArticleEdit_Fail_OtherUser(): void
     {
-        #アナザーユーザーの作成＋ログイン
+        #アナザーユーザーの作成＋ログイン+アナザーユーザーでは許可されていない
         $this->otherUser = factory(User::class)->create();
-        $response = $this->actingAs($this->otherUser);
-
-        #アナザーユーザーでは403
-        $response = $this->get(route('articles.edit', ['article' => $this->article]))
+        $response = $this->actingAs($this->otherUser)
+            ->get(route('articles.edit', ['article' => $this->article]))
             ->assertStatus(403);
     }
 
     public function testArticleStore_Success(): void
     {
-        #アナザーユーザーの作成＋ログイン
+        #アナザーユーザーの作成＋ログイン+記事を投稿
         $this->otherUser = factory(User::class)->create();
-        $response = $this->actingAs($this->otherUser);
-
-        #所定の内容を記述して投稿
-        $response->post(route('articles.store'), $this->articleDate_succuss)
+        $this->actingAs($this->otherUser)
+            ->post(route('articles.store'), $this->articleDate_succuss)
             ->assertStatus(302)
             ->assertSessionHas('flash_message', '投稿が完了しました')
             ->assertRedirect(route('articles.index'));
@@ -117,15 +113,24 @@ class ArticleTest extends TestCase
 
     public function testArticleStore_fail(): void
     {
-        #アナザーユーザーの作成＋ログイン
+        #アナザーユーザーの作成＋ログイン+bodyの記述がなく'flash_message'がない
         $this->otherUser = factory(User::class)->create();
-        $response = $this->actingAs($this->otherUser);
-
-        $response->post(route('articles.store'), $this->articleDate_fail)
+        $response = $this->actingAs($this->otherUser)
+            ->post(route('articles.store'), $this->articleDate_fail)
             ->assertStatus(302)
+            ->assertSessionHas('flash_message', '') #メッセージがない
             ->assertRedirect(route('articles.index'));
     }
 
+    public function testArticleUpdate_Success(): void
+    {
+        #既に投稿している記事のユーザーでログイン
+        $response = $this->actingAs($this->article->user)
+            ->put(route('articles.update' ,['article' => $this->article], $this->articleDate_succuss))
+            ->assertStatus(302)
+            ->assertRedirect(route('articles.index'));
+        
+    }
 
 
 }
