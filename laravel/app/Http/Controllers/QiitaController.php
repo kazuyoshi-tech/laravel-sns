@@ -34,6 +34,11 @@ class QiitaController extends Controller
         // $qiitas = $response->getBody()->getContents();
         // $qiitas_array = json_decode($qiitas, true);
         // return view('qiitas.index', ['qiitas' => $qiitas_array]);
+        // print($qiitas[0]['Title']);
+        // $qiitas = [[
+        //     'Title' => '競技プログラミング（yukicoder）',
+        //     'Tags'   => '数理教徒多すぎて勝てません'
+        // ]];
 
 
         $qiitas = $this->QiitaService->getApi();
