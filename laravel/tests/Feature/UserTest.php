@@ -50,14 +50,4 @@ class UserTest extends TestCase
         // ユーザーが認証されていないことを確認
         $this->assertGuest();
     }
-
-
-
-    // $user = factory(User::class)->create();
-    //     $response = $this
-    //         ->actingAs($user)
-    //         ->get(route('articles.create'));
-        
-    //     $response->assertStatus(200)
-    //         ->assertViewIs('articles.create');
 }

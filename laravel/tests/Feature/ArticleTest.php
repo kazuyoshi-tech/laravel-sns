@@ -58,8 +58,8 @@ class ArticleTest extends TestCase
     {
         // actingAsヘルパで現在認証済みのユーザーを指定する
         $this->actingAs($this->article->user)
-              ->get(route('articles.create'))
-              ->assertStatus(200);
+             ->get(route('articles.create'))
+             ->assertStatus(200);
     }
 
     public function testArticleCreate_Fails(): void
