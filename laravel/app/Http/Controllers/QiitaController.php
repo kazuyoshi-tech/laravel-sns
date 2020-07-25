@@ -16,7 +16,7 @@ class QiitaController extends Controller
 
     public function index()
     {
-        $client = new \GuzzleHttp\Client();
+        // $client = new \GuzzleHttp\Client();
 
         // $response = $client->request("GET", 'https://qiita.com/api/v2/items/',[
         //     'headers' => [

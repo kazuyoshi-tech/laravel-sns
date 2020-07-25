@@ -17,10 +17,9 @@ class QiitaApiTest extends TestCase
         parent::setUp();
 
         #Qiitaデータ作成
-        $this->apiresponse = ['qiitas' => [
-            'title' => '競技プログラミング（yukicoder）',
-            'body' => '数理教徒多すぎて勝てません',
-        ]];
+        $this->ApiResponseDate = [
+            ['Title' => '競技プログラミング（yukicoder）', 'Tags'   => '数理教徒多すぎて勝てません'],
+        ];
     }
 
     /**
@@ -30,24 +29,17 @@ class QiitaApiTest extends TestCase
      */
     public function testGetApi(): void
     {
-        
-        $ApiServiceMock = Mockery::mock('alias:QiitaService')
-            ->shouldReceive('GetApi')
-            ->once()
-            ->andReturn([
-                [
-                    'Title' => '競技プログラミング（yukicoder）',
-                    'Tags'   => '数理教徒多すぎて勝てません',
-                ]   
-            ])
-            ->getMock();
-        
-        $this->app->bind(QiitaService::class, function () use ($ApiServiceMock) {
-            return $ApiServiceMock;
+        $ApiResponseDate = $this->mock(QiitaService::class, function ($mock) {
+            $mock
+                ->shouldReceive('GetApi')
+                ->once()
+                ->andReturn($this->ApiResponseDate)
+                ->getMock();
         });
 
-        $this->get(route('qiitas.index', ['qiitas' => $ApiServiceMock]))
+
+        $this->get(route('qiitas.index'))
             ->assertStatus(200);
-            // ->assertSee($this->article->title);
+            // ->assertSee($ApiResponseDate[0]['Title']);
     }
 }
