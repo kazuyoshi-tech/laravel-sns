@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\QiitaService;
 
 class QiitaController extends Controller
 {
+    protected $QiitaService;
+
+    public function __construct(QiitaService $QiitaService)
+    {
+        $this->QiitaService = $QiitaService;
+    }
+
     public function index()
     {
         $client = new \GuzzleHttp\Client();
@@ -22,7 +30,9 @@ class QiitaController extends Controller
             
         // ]);
 
-        $response = $client->request('GET', 'https://yukicoder.me/api/v1/problems/');
+        // $response = $client->request('GET', 'https://yukicoder.me/api/v1/problems/');
+
+        $response = $this->QiitaService->getApi();
 
         $qiitas = $response->getBody()->getContents();
 
