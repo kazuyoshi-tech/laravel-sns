@@ -31,13 +31,13 @@ class QiitaController extends Controller
         // ]);
 
         // $response = $client->request('GET', 'https://yukicoder.me/api/v1/problems/');
+        // $qiitas = $response->getBody()->getContents();
+        // $qiitas_array = json_decode($qiitas, true);
+        // return view('qiitas.index', ['qiitas' => $qiitas_array]);
 
-        $response = $this->QiitaService->getApi();
 
-        $qiitas = $response->getBody()->getContents();
+        $qiitas = $this->QiitaService->getApi();
 
-        $qiitas_array = json_decode($qiitas, true);
-
-        return view('qiitas.index', ['qiitas' => $qiitas_array]);
+        return view('qiitas.index', ['qiitas' => $qiitas]);
     }
 }

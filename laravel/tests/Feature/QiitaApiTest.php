@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use App\Services\QiitaService;
+
 use Mockery;
 
 class QiitaApiTest extends TestCase
@@ -17,12 +19,17 @@ class QiitaApiTest extends TestCase
      */
     public function testGetApi(): void
     {
-        $mock = Mockery::mock('overload: https://yukicoder.me/api/v1/problems/')
+        $ApiServiceMock = Mockery::mock('overload: QiitaService')
+            ->shouldReceive('GetApi')
+            ->once()
             ->andReturn([
                 'qiitas' => [
                 'Title' => '競技プログラミング（yukicoder）',
                 'Tag'   => '数理教徒多すぎて勝てません',
                 ]
-            ]);
+            ])
+            ->getMock();
+        
+        
     }
 }
