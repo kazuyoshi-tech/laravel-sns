@@ -44,14 +44,17 @@ class QiitaController extends Controller
 
         $qiitas = $this->QiitaService->getApi();
 
+        // 結果をリターする配列を準備
         $result = collect();
         $count = 0;
         foreach($qiitas as $qiita) {
+            // データの整形
             $tmpData = [
                 'Title' =>  $qiita['Title'],
                 'Tags'  =>  $qiita['Tags'],
                 'Date'  =>  Carbon::parse($qiita['Date'])->format('Y/m/d')
             ];
+            // 整形データをresultにpush
             $result->push($tmpData);
             $count += 1;
             if(25 < $count) {
