@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
+
 class QiitaService {
+
     public function GetApi()
     {
         # API検索用ラッパー（Guzzle）のセットアップ
@@ -26,6 +29,25 @@ class QiitaService {
         $qiitas = $response->getBody()->getContents();
 
         # JSONを連想配列に変換してリターン
-        return json_decode($qiitas, true);
+        $qiitas = json_decode($qiitas, true);
+
+        // 結果をリターする配列を準備
+        $result = collect();
+        $count = 0;
+        foreach($qiitas as $qiita) {
+            // データの整形
+            $tmpData = [
+                'Title' =>  $qiita['Title'],
+                'Tags'  =>  $qiita['Tags'],
+                'Date'  =>  Carbon::parse($qiita['Date'])->format('Y/m/d')
+            ];
+            // 整形データをresultにpush
+            $result->push($tmpData);
+            $count += 1;
+            if(25 < $count) {
+            break;
+            }
+        }
+        return $result;
     }
 }
