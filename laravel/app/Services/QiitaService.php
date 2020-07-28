@@ -8,7 +8,7 @@ class QiitaService {
         # API検索用ラッパー（Guzzle）のセットアップ
         $client = new \GuzzleHttp\Client();
 
-        // APIを叩く
+        # APIを叩く
         $response = $client->request('GET', 'https://yukicoder.me/api/v1/problems/');
         // $response = $client->request("GET", 'https://qiita.com/api/v2/items/',[
         //     'headers' => [
